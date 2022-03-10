@@ -1,0 +1,216 @@
+/*use the universal selector to set some styles*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --white: #fff;
+    --light-blue: lightblue;
+    --color-blue: blue;
+    --color-dark-grey: #222831;
+}
+
+/*withe this font size, anywhere we use rem  our styling,  wl be translated to the rem X 10px, normally , 1
+1 rem is 16px*/
+html {
+    font-size: 10px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,500&display=swap');
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+  
+/* Start Here */
+.intro-text {
+    background-color: var(--color-dark-grey);
+    color: var(--white);
+    padding: 2rem 0;
+}
+  
+.container {
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+  
+.intro-text h1 {
+    font-size: 2.5rem;
+}
+
+p {
+    font-size: 1.5rem;
+    padding-top: 2rem;
+    line-height: 1.6;
+}
+
+/*Timeline section*/
+img {
+    width: 100%;
+}
+
+.timeline-section {
+    width: 100%;
+    overflow: hidden;  /* creates block formatting context */
+}
+
+.timeline-section ul {
+    background: var(--light-blue);
+    padding: 5rem 0; /* padding top and bottom 5rem */
+}
+
+/*styling the liSt*/
+.timeline-section ul li {
+    list-style: none;
+    position: relative;
+    width: 5px; /* set width to 5px then set background to lightblue for that width */
+    margin: 0 auto; /* center text */
+    padding-top: 5rem; /* separate each list with a padding-top of 5rem = 5 x 10px= 50px */
+    background: var(--color-blue);
+}
+
+/*use pseudo elements to style*/
+/*This section will help us make the node-like structure - The circle*/
+.timeline-section ul li::after {
+    content: "";/* The content attribute is required for pseudo-elements to render */
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: inherit; /* inherits this property from its parent element */
+}
+
+
+/* Content box */
+.timeline-section ul li div {
+    width: 40rem;
+    font-size: 1.2rem;
+    position: relative;
+    bottom: 0;
+    padding: 1.5rem;
+    /*glassmorphism effect*/
+    background: rgba(255,255,255,.2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    border-top: 2px solid rgba(255, 255, 255, 0.5);
+    border-left: 2px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    border-right: 2px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Triangle */
+.timeline-section ul li div::before {
+    content: "";
+    position: absolute;
+    bottom: 7px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+/*This is to select the divs at odd position so we can separate the divs to the right part*/
+.timeline-section ul li:nth-child(odd) div {
+    left: 45px;  /* this style pushes the divs at odd number position to the right */
+}
+  
+/*this showcases the triangle*/
+.timeline-section ul li:nth-child(odd) div::before {
+    left: -15px;
+    border-width: 8px 16px 8px 0;
+    border-color: transparent var(--light-blue) transparent transparent;
+}
+ 
+/*This is to select the divs at even number position so we can separate the divs to the left part*/
+.timeline-section ul li:nth-child(even) div {
+    left: -439px;
+}
+  
+/*this showcases the triangle*/
+.timeline-section ul li:nth-child(even) div::before {
+    right: -15px;
+    border-width: 8px 0 8px 16px;
+    border-color: transparent transparent transparent var(--light-blue); 
+}
+
+/*style the time tag*/
+time {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 7px;
+}
+
+.timeline-section ul li::after {
+    transition: all 0.5s ease-in-out;
+}  
+
+ 
+/*this changes the node content..giving it a background of white and making the border thicker*/
+.timeline-section ul li.slide-in::after {
+    background: var(--white);
+    border: 3px solid var(--light-blue);
+}
+
+/* Hide event card initially */
+.timeline-section ul li div {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+  
+.timeline-section ul li:nth-child(odd) div {
+    transform: translateX(20rem);
+}
+
+.timeline-section ul li:nth-child(even) div {
+    transform: translateX(-20rem);
+}
+
+/* display the event card */
+.timeline-section ul li.slide-in div {
+    transform: none;
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Tablet Width */
+@media screen and (max-width: 900px) {
+    .timeline-section ul li div {
+      width: 25rem;
+   }
+
+.timeline-section ul li:nth-child(even) div {
+      left: -289px;
+    }
+}
+
+/* Mobile width */
+@media screen and (max-width: 600px) {
+    .timeline-section ul li {
+      margin-left: 2rem;
+    }
+  
+    .timeline-section ul li div {
+      width: calc(100vw - 91px);
+    }
+  
+    .timeline-section ul li:nth-child(even) div {
+      left: 45px;
+    }
+  
+    .timeline-section ul li:nth-child(even) div::before {
+      left: -15px;
+      border-width: 8px 16px 8px 0;
+      border-color: transparent var(--light-blue) transparent transparent;
+    }
+}
+
